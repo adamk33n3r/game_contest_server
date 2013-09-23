@@ -1,0 +1,10 @@
+<% provide(:title, @user.username + '\'s Profile') %>
+<% if @user then %>
+  <h2>Welcome to <%= @user.username %>'s profile!</h2>
+  <%= link_to "Back to all users", users_path %>
+  Email: <%= @user.email %>
+  Password: <%= @user.password_digest %>
+<%= link_to "Delete User", @user, method: :delete, data: { confirm: 'Are you sure?', disable_with: 'loading...' }%>
+<% else %>
+  <h2>User not found</h2>
+<% end %>

@@ -1,0 +1,14 @@
+<% provide(:title, 'Users') %>
+<%= link_to "Create a new user", new_user_path %>
+<% if User.all.empty? %>
+  <h2>No Users</h2>
+<% else %>
+  <h2>Users:</h2>
+  <ol>
+  <% User.all.each do |u| %>
+    <li>
+      <%= link_to u.username, u %>
+    </li>
+  <% end %>
+<% end %>
+</ol>
