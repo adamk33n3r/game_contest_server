@@ -3,7 +3,7 @@
 <% if User.all.empty? %>
   <h2>No Users</h2>
 <% else %>
-  <h2>Users:</h2>
+  <h2>List of users:</h2>
   <ol>
   <% User.all.each do |u| %>
     <li>
@@ -12,3 +12,4 @@
   <% end %>
 <% end %>
 </ol>
+<%= pluralize(User.count, "user") %>
