@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   def index
   end
   def show
-    @user = User.find_by_id(params[:id])
+    @user = User.find_by_username(params[:id])
   end
   
   def new
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   def update
     accept_params = params.require(:user).permit(:username, :password, :password_confirmation, :email)
     @user = User.find_by_id(params[:id])
-    if @user.update_attributes(accept_params)
+    if @user.update(accept_params)
       redirect_to @user
     else
       render :edit
