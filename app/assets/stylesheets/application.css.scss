@@ -1,0 +1,86 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+html, body, h1 {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #444;
+  height: 100%;
+}
+
+#header {
+  padding: 10px;
+  width: 75%;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  text-shadow: 5px 5px 10px black;
+  font-variant:small-caps;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  border: 2px solid black;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background-image: linear-gradient(to bottom, #0080FF 0%, #002040 100%);
+}
+
+#content {
+  padding: 10px;
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 50px;
+  background-color: #bbb;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+#footer {
+  $width: 75%;
+  padding: 10px;
+  width: $width;
+  height: 28px;
+  position: absolute;
+  top: 100%;
+  left: calc(50% - 75% / 2);
+  margin-top: -50px;
+  text-align: center;
+  color: white;
+  text-shadow: 5px 5px 10px black;
+  font-variant:small-caps;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  border: 2px solid black;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  background-image: linear-gradient(to bottom, #0080FF 0%, #002040 100%);
+}
+
+a {
+  color: #444;
+  transition: color .2s;
+  text-decoration: none;
+}
+
+a:hover, a:visited:hover{
+  color: #0066cc;
+}
+
+a:visited {
+  color: #222;
+}

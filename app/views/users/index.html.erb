@@ -5,11 +5,7 @@
 <% else %>
   <h2>List of users:</h2>
   <ol>
-  <% User.all.each do |u| %>
-    <li>
-      <%= link_to u.username, u %>
-    </li>
-  <% end %>
+    <%= render @users %>
+  </ol>
 <% end %>
-</ol>
 <%= pluralize(User.count, "user") %>

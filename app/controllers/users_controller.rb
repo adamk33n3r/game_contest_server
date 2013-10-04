@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
-  def index
-  end
-  def show
+  before_filter :find_user, :only => [:show, :edit, :update, :destroy]
+  
+  def find_user
     @user = User.find_by_username(params[:id])
+  end
+  
+  def index
+    @users = User.all
+  end
+  
+  def show
   end
   
   def new
@@ -10,7 +17,6 @@ class UsersController < ApplicationController
   end
   
   def create
-    accept_params = params.require(:user).permit(:username, :password, :password_confirmation, :email)
     @user = User.new(accept_params)
     if @user.save
       redirect_to @user
@@ -20,12 +26,9 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @user = User.find_by_id(params[:id])
   end
   
   def update
-    accept_params = params.require(:user).permit(:username, :password, :password_confirmation, :email)
-    @user = User.find_by_id(params[:id])
     if @user.update(accept_params)
       redirect_to @user
     else
@@ -34,8 +37,11 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user = User.find_by_id(params[:id])
     @user.destroy
     redirect_to users_path
+  end
+  
+  def accept_params
+    params.require(:user).permit(:username, :password, :password_confirmation, :email)
   end
 end
