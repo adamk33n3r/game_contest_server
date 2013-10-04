@@ -5,7 +5,9 @@
 <% else %>
   <h2>List of users:</h2>
   <ol>
-    <%= render @users %>
+    <% @users.each do |user| %>
+    <li><%= user.username %> <%= link_to "delete", user, :method => :delete %></li>
+    <% end %>
   </ol>
 <% end %>
 <%= pluralize(User.count, "user") %>
