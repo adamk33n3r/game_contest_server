@@ -1,5 +1,5 @@
 <% provide(:title, 'Users') %>
-<%= link_to "Create a new user", new_user_path %>
+<%= link_to "Create a new user", signup_path %>
 <% if User.all.empty? %>
   <h2>No Users</h2>
 <% else %>
@@ -10,4 +10,4 @@
     <% end %>
   </ol>
 <% end %>
-</ol>
+<%= pluralize(User.count, "user") %>
