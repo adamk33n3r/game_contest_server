@@ -1,0 +1,25 @@
+<% if @user.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="form-group">
+  <%= f.label :username, :class => "sr-only" %>
+  <%= f.text_field :username, :class => "form-control", :placeholder => :Username %>
+</div>
+<div class="form-group">
+  <%= f.label :email, :class => "sr-only" %>
+  <%= f.text_field :email, :class => "form-control", :placeholder => :Email %>
+</div>
+<div class="form-group">
+  <%= f.label :password, :class => "sr-only" %>
+  <%= f.password_field :password, :class => "form-control", :placeholder => :Password %>
+</div>
+<div class="form-group">
+  <%= f.label :password_confirmation, "Confirmation", :class => "sr-only" %>
+  <%= f.password_field :password_confirmation, :class => "form-control", :placeholder => :Confirmation %>
+</div>

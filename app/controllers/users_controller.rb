@@ -9,15 +9,26 @@ class UsersController < ApplicationController
   end
   
   def create
-    user = params[:user]
     @user = User.new(:username => user[:username], :password => user[:password], :password_confirmation => user[:password_confirmation], :email => user[:email])
     #if @user.valid? then
     if @user.save
+      flash[:success] = "Yay you did it, " + @user.username + "!"
       redirect_to @user
     else
       render :new
     end
-    #end
+  end
+  
+  def edit
+  end
+  
+  def update
+    if @user.update(accept_params)
+      flash[:success] = "Yay you did it, " + @user.username + "!"
+      redirect_to @user
+    else
+      render :edit
+    end
   end
   
   def destroy

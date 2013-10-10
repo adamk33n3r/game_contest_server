@@ -1,0 +1,21 @@
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <span class="navbar-brand">Game Contest Server</span>
+  </div>
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li><%= link_to "List of Users", users_path %></li>
+      <% if session[:logged] %>
+        <li><%= link_to "Profile", @user %></li>
+      <% else %>
+        <li><%= link_to "Sign Up", signup_path %></li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
