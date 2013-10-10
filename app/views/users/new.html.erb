@@ -1,15 +1,8 @@
 <% provide(:title, 'Sign up') %>
 <h1>Sign Up!</h1>
-<% if @user.errors.any? %>
-  <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
-<% end %>
-<%= form_for @user do |form| %>
+<%= form_for @user, :html => {:class => "form-inline", :role => "form"} do |form| %>
   <%= render 'user_form', :f => form %>
   <div>
-    <%= form.submit "Create new account" %>
+    <%= form.submit "Create new account", :class => "btn btn-primary" %>
   </div>
 <% end %>
