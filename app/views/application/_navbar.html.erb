@@ -10,12 +10,17 @@
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li><%= link_to "List of Users", users_path %></li>
+      <li <% if current_page? users_path %><%= 'class=active'%><% end %>><%= link_to "List of Users", users_path %></li>
       <% if session[:logged] %>
-        <li><%= link_to "Profile", @user %></li>
+        <li <% if current_page? user_path(session[:user]) %><%= 'class=active'%><% end %>><%= link_to "Profile", User.find_by_username(session[:user]) %></li>
+        <li><%= link_to "Logout", session_path, :method => :delete %></li>
       <% else %>
-        <li><%= link_to "Sign Up", signup_path %></li>
+        <li <% if current_page? signup_path %><%= 'class=active'%><% end %>><%= link_to "Sign Up", signup_path %></li>
+        <li <% if current_page? login_path %><%= 'class=active'%><% end %>><%= link_to "Login", login_path %></li>        
       <% end %>
     </ul>
+    <% if session[:logged] %>
+      <p class="navbar-text navbar-right">Logged in as <%= session[:user] %></p>
+    <% end %>
   </div>
 </nav>
