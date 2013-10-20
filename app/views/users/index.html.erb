@@ -6,7 +6,7 @@
   <h2>List of users:</h2>
   <ol>
     <% @users.each do |user| %>
-    <li><%= link_to user.username, user %> <%= link_to "delete", user, :method => :delete, :class => "btn btn-danger btn-xs " + (session[:user] == user.username ? "" : "disabled") %></li>
+    <li><%= link_to user.username, user %> <%= link_to "delete", user, :method => :delete, :class => "btn btn-danger btn-xs " + (current_user?(user) ? "" : "disabled") %></li>
     <% end %>
   </ol>
 <% end %>

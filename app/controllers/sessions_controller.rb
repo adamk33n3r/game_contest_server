@@ -5,9 +5,10 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by_username params[:username]
     if @user && @user.authenticate(params[:password])
-      flash[:success] = "#{@yser} logged in."
-      session[:logged] = true
-      session[:user] = @user.username
+      flash[:success] = "Welcome, #{@user.username.titleize}!"
+      cookies[:logged] = true
+      cookies[:user] = @user.username
+      cookies.signed[:user_id] = @user.id
       redirect_to @user
     else
       flash.now[:danger] = "Invalid username or password"
@@ -16,8 +17,10 @@ class SessionsController < ApplicationController
   end
   
   def destroy
-    session[:logged] = nil
-    session[:user] = nil
-    redirect_to root_path
+    @current_user = nil
+    cookies.delete :user_id
+    cookies.delete :logged
+    cookies.delete :user
+    redirect_to login_path
   end
 end
