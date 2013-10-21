@@ -55,21 +55,19 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    if @user.admin?
-      redirect_to root_path
-      flash[:danger] = "Can't delete admin."
-      return
-    end
-    if @user.username == current_user.username
-      redirect_to root_path
-    else
+    if !current_user? @user
       redirect_to users_path
-    end
-    if @user.destroy
-      flash[:success] = "Successfully deleted user."
+      cookies.delete :user_id
+      if @user.destroy
+        flash[:success] = "Successfully deleted user."
+      else
+        flash[:danger] = "Error in destroy."
+      end
     else
-      flash[:danger] = "Error in destroy."
+      flash[:danger] = "Can't delete yourself."
+      redirect_to root_path
     end
+    
   end
   
   private
