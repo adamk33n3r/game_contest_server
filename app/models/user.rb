@@ -5,5 +5,6 @@ class User < ActiveRecord::Base
   validates :password, :length => {:minimum => 6}
   def to_param
     username
+    id
   end
 end

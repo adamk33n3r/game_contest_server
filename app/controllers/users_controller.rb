@@ -2,9 +2,10 @@ class UsersController < ApplicationController
   before_filter :find_user, :only => [:show, :edit, :update, :destroy]
   before_action :ensure_user_logged_in, :only => [:edit, :update]
   before_action :ensure_correct_user, :only => [:edit, :update]
+  before_action :ensure_admin, :only => [:destroy]
   
   def find_user
-    @user = User.find_by_username(params[:id])
+    @user = User.find_by_id(params[:id])
   end
   
   def index
@@ -15,19 +16,29 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.new
+    if logged_in?
+      flash[:warning] = "You must be logged out to make a new account."
+      redirect_to root_path
+    else
+      @user = User.new
+    end
   end
   
   def create
-    @user = User.new(accept_params)
-    if @user.save
-      flash[:success] = "Welcome, #{@user.username.titleize}!"
-      cookies[:logged] = true
-      cookies[:user] = @user.username
-      cookies.signed[:user_id] = @user.id
-      redirect_to @user
+    if logged_in?
+      flash[:warning] = "You must be logged out to make a new account."
+      redirect_to root_path
     else
-      render :new
+      @user = User.new(accept_params)
+      if @user.save
+        flash[:success] = "Welcome, #{@user.username.titleize}!"
+        cookies[:logged] = true
+        cookies[:user] = @user.username
+        cookies.signed[:user_id] = @user.id
+        redirect_to @user
+      else
+        render :new
+      end
     end
   end
   
@@ -36,7 +47,7 @@ class UsersController < ApplicationController
   
   def update
     if @user.update(accept_params)
-      flash[:success] = "Yay you did it!"
+      flash[:success] = "Sucessfully updated #{@user.username.titleize}!"
       redirect_to @user
     else
       render :edit
@@ -44,8 +55,21 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user.destroy
-    redirect_to users_path
+    if @user.admin?
+      redirect_to root_path
+      flash[:danger] = "Can't delete admin."
+      return
+    end
+    if @user.username == current_user.username
+      redirect_to root_path
+    else
+      redirect_to users_path
+    end
+    if @user.destroy
+      flash[:success] = "Successfully deleted user."
+    else
+      flash[:danger] = "Error in destroy."
+    end
   end
   
   private
@@ -54,12 +78,17 @@ class UsersController < ApplicationController
   end
   
   def ensure_user_logged_in
-    flash[:warning] = "Unable"
-    redirect_to login_path unless logged_in?
+    unless logged_in?
+      flash[:warning] = "Required to be logged in."
+      redirect_to login_path
+    end
   end
   
   def ensure_correct_user
-    redirect_to root_path unless current_user? User.find_by_username(params[:id])
+    unless current_user? User.find_by_id(params[:id])
+      flash[:danger] = "Not correct user."
+      redirect_to root_path
+    end
   end
   
   def ensure_admin

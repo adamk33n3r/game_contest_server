@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
     cookies.delete :user_id
     cookies.delete :logged
     cookies.delete :user
+    flash[:info] = "Successfully logged out"
     redirect_to login_path
   end
 end
