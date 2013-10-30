@@ -3,6 +3,6 @@
 <%= form_for @user, :html => {:class => "form-inline", :role => "form"} do |form| %>
   <%= render 'user_form', :f => form %>
   <div>
-    <%= form.submit "Create new account", :class => "btn btn-primary" %>
+    <%= form.button "Create new account", :class => "btn btn-primary", :data => {:loading_text => "Loading..."} %>
   </div>
 <% end %>
