@@ -1,0 +1,32 @@
+<h1><%= @contest.name %></h1>
+<h3>Description:</h3>
+<%= @contest.description %>
+<p>Contest Type: <%= @contest.contest_type %></p>
+<p>Referee: <%= link_to @contest.referee.name, @contest.referee %></p>
+<p>Owner: <%= link_to @contest.user.username, @contest.user %></p>
+<% d_time = (@contest.deadline - Time.now).round %>
+<% s_time = (@contest.start - Time.now).round %>
+<p>Time until deadline:</p>
+<% if d_time < 60 %>
+  <p>less than a minute</p>
+<% elsif d_time < 60 * 60 %>
+  <p><%= pluralize(d_time / 60, "minute") %></p>
+<% elsif d_time < 60 * 60 * 24 %>
+  <p><%= pluralize(d_time / 60 / 60, "hour") %></p>
+<% else %>
+  <p><%= pluralize(d_time / 60 / 60 / 24, "day") %></p>
+<% end %>
+
+<p>Time until start:</p>
+
+<% if s_time < 60 %>
+  <p>less than a minute</p>
+<% elsif s_time < 60 * 60 %>
+  <p><%= pluralize(s_time / 60, "minute") %></p>
+<% elsif s_time < 60 * 60 * 24 %>
+  <p><%= pluralize(s_time / 60 / 60, "hour") %></p>
+<% else %>
+  <p><%= pluralize(s_time / 60 / 60 / 24, "day") %></p>
+<% end %>
+
+<%= link_to "New Player", new_contest_player_path(@contest) %>

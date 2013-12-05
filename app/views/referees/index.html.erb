@@ -1,0 +1,6 @@
+Referees
+<ul>
+  <% Referee.all.each do |ref| %>
+    <li><%= link_to ref.name, ref %></li>
+  <% end %>
+</ul>

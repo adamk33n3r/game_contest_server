@@ -1,0 +1,9 @@
+<p>Name: <%= @referee.name %></p>
+<p><%= link_to "Rules", @referee.rules_url %></p>
+<p>Players per game: <%= @referee.players_per_game %></p>
+<p>Belongs to: <%= @referee.user.username %>
+<ul>
+  <% @referee.contests.each do |contest| %>
+    <li><%= link_to contest.name, contest %></li>
+  <% end %>
+</ul>

@@ -1,0 +1,23 @@
+<h1><%= @player.name %></h1>
+<h2>Description:</h2>
+<p><%= @player.description %></p>
+<p>Belongs to User <%= link_to @player.user.username, @player.user %></p>
+<p>Belongs to Contest <%= link_to @player.contest.name, @player.contest %></p>
+<% if @player.contest.players.length > 1 %>
+<p>Other players in this contest:</p>
+<ul>
+  <% @player.contest.players.each do |player| %>
+  <% if player != @player %>
+    <li><%= link_to player.name, player %></li>
+  <% end %>
+  <% end %>
+</ul>
+<% end %>
+<p>Player is available for matches: <%= @player.playable %></p>
+
+<h2>History</h2>
+<% @player.player_matches.each do |pmatch| %>
+<li><%= link_to pmatch.match %>Result: <%= pmatch.result %></li>
+<% end %>
+<h2><%= pluralize(@player.matches.count, "Match") %></h2>
+<p>Record: <%= @player.player_matches.where(result: "Win").count %>-<%=  @player.player_matches.where(result: "Loss").count %></p>

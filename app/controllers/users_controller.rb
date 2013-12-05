@@ -4,15 +4,19 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user, :only => [:edit, :update]
   before_action :ensure_admin, :only => [:destroy]
   
+  respond_to :html, :json, :xml
+  
   def find_user
     @user = User.find_by_id(params[:id])
   end
   
   def index
     @users = User.all
+    respond_with(@users)
   end
   
   def show
+    respond_with(@user)
   end
   
   def new
@@ -90,6 +94,9 @@ class UsersController < ApplicationController
   end
   
   def ensure_admin
-    redirect_to root_path unless current_user.admin?
+    unless current_user.admin?
+      flash[:danger] = "You don't have those admin permissions, dawg!"
+      redirect_to root_path 
+    end
   end
 end
